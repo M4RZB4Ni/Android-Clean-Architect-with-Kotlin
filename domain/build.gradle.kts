@@ -42,9 +42,12 @@ android {
 dependencies {
 
     implementation("com.google.dagger:hilt-android:2.50")
+    implementation(project(":data"))
     kapt("com.google.dagger:hilt-android-compiler:2.50")
 
     api(platform("org.jetbrains.kotlin:kotlin-bom:1.9.22"))
+
+
 
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation ("io.reactivex.rxjava2:rxjava:2.2.21")
