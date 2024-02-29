@@ -10,7 +10,7 @@ import retrofit2.http.Url
 interface NodesService {
     @GET
     fun getNodes(@Url url: String): Single<TreeNodeModel>
-    @GET("entries/{imageCode}.json")
-    fun getAdditionalData(@Path("imageCode") imageCode: String): Single<DetailsModel>
+    @GET("entries/{dataCode}.json")
+    fun getAdditionalData(@Path("dataCode") imageCode: String): Single<DetailsModel>
 
 }
