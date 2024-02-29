@@ -1,4 +1,4 @@
-package com.marzbani.domain.mapper
+package com.marzbani.data.mapper
 
 import com.marzbani.data.model.Entry
 import com.marzbani.data.model.TreeNodeModel

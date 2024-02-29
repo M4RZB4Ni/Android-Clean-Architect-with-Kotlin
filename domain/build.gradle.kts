@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
@@ -10,25 +10,10 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.marzbani.domain"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     hilt {
         enableAggregatingTask = true
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,7 +27,6 @@ android {
 dependencies {
 
     implementation("com.google.dagger:hilt-android:2.50")
-    implementation(project(":data"))
     kapt("com.google.dagger:hilt-android-compiler:2.50")
 
     api(platform("org.jetbrains.kotlin:kotlin-bom:1.9.22"))

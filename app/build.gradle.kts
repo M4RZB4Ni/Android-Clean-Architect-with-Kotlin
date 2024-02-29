@@ -10,13 +10,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.marzbani.imglytaksk"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
         multiDexEnabled = true
-        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -56,9 +51,10 @@ android {
 }
 
 dependencies {
-    project(":domain")
-    project(":data")
-    project(":presentation")
+
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":presentation"))
 
     implementation ("androidx.multidex:multidex:2.0.1")
     implementation("com.google.dagger:hilt-android:2.50")
