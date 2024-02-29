@@ -4,8 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.google.gson.Gson
-import com.marzbani.data.mapper.DetailsEntityMapper
-import com.marzbani.data.mapper.TreeNodeEntityMapper
+import com.marzbani.data.mapper.MapperFactoryImpl
 import com.marzbani.data.repository.NodesRepositoryImpl
 import com.marzbani.data.source.NodesService
 import com.marzbani.domain.repository.NodesRepository
@@ -116,15 +115,20 @@ object NetworkModule {
         return retrofit.create(NodesService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideMapperFactory(): MapperFactory {
+        return MapperFactoryImpl()
+    }
+
 
     @Singleton
     @Provides
     fun provideNodesRepository(
         retrofitService: NodesService,
-        nodeMap: TreeNodeEntityMapper,
-        detailsEntityMapper: DetailsEntityMapper,
+        mapperFactory: MapperFactory
     ): NodesRepository {
-        return NodesRepositoryImpl(retrofitService,nodeMap,detailsEntityMapper)
+        return NodesRepositoryImpl(retrofitService,mapperFactory.provideTreeNodeEntityMapper(),mapperFactory.provideDetailsEntityMapper())
     }
 
 
