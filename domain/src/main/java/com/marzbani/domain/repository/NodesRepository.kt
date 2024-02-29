@@ -5,6 +5,6 @@ import com.marzbani.domain.entity.TreeNodeEntity
 import io.reactivex.Single
 
 interface NodesRepository {
-    fun getNodes(url:String): Single<TreeNodeEntity>
+    fun getNodes(url:String): Single<List<TreeNodeEntity>>
     fun getAdditionalData(dataCode:String):Single<DetailsEntity>
 }

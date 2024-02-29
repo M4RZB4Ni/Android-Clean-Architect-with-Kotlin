@@ -9,7 +9,11 @@ import com.marzbani.domain.entity.WorkspaceEntity
 
 
 class TreeNodeEntityMapper {
-    fun mapFromTreeNode(treeNode: TreeNodeModel): TreeNodeEntity {
+    fun mapFromTreeNodeList(treeNodes: List<TreeNodeModel>): List<TreeNodeEntity> {
+        return treeNodes.map { mapFromTreeNode(it) }
+    }
+
+    private fun mapFromTreeNode(treeNode: TreeNodeModel): TreeNodeEntity {
         return TreeNodeEntity(
             label = treeNode.label,
             entries = treeNode.entries?.map { mapEntry(it) } ?: emptyList(),
@@ -32,5 +36,4 @@ class TreeNodeEntityMapper {
             subEntries = node.children?.map { mapEntry(it) } ?: emptyList()
         )
     }
-
 }

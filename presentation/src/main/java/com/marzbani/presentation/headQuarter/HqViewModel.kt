@@ -1,5 +1,6 @@
 package com.marzbani.presentation.headQuarter
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.marzbani.domain.entity.TreeNodeEntity
@@ -10,8 +11,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HqViewModel @Inject constructor(private val getNodesUseCase: GetNodesUseCase): ViewModel() {
 
-    private val _nodesData = MutableLiveData<TreeNodeEntity>()
-    val nodesData : MutableLiveData<TreeNodeEntity> get() = _nodesData
+    private val _nodesData = MutableLiveData<List<TreeNodeEntity>>()
+    val nodesData : LiveData<List<TreeNodeEntity>> get() = _nodesData
 
 
     init {

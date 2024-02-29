@@ -7,8 +7,8 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class GetNodesUseCase @Inject constructor(private val repository: NodesRepository):
-    SingleUseCase<String,TreeNodeEntity>() {
-    override fun buildUseCaseSingle(params: String): Single<TreeNodeEntity> {
+    SingleUseCase<String,List<TreeNodeEntity>>() {
+    override fun buildUseCaseSingle(params: String): Single<List<TreeNodeEntity>> {
         return repository.getNodes(params)
     }
 
