@@ -7,7 +7,7 @@ import com.marzbani.domain.entity.EntryEntity
 import com.marzbani.domain.entity.TreeNodeEntity
 import com.marzbani.domain.entity.WorkspaceEntity
 
-// Domain Layer
+
 class TreeNodeEntityMapper {
     fun mapFromTreeNode(treeNode: TreeNodeModel): TreeNodeEntity {
         return TreeNodeEntity(
