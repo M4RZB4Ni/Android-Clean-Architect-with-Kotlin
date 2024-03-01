@@ -18,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.marzbani.presentation.R
 
 @Composable
 fun MainAppBar(
@@ -49,10 +51,10 @@ fun MainAppBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Text(text = "Img.ly Task by Hamid", style = MaterialTheme.typography.headlineSmall)
+                Text(text = stringResource(id = R.string.app_name), style = MaterialTheme.typography.headlineSmall)
                 Icon(
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit",
+                    contentDescription = stringResource(id = R.string.edit),
                     tint = Color.White,
                     modifier = Modifier
                         .padding(8.dp)

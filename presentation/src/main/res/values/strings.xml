@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name">Presentation</string>
-    <string name="title_activity_details">DetailsActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">Img.ly Test</string>
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="details">Details</string>
+    <string name="id">ID</string>
+    <string name="created_at">Created At</string>
+    <string name="created_by">Created By</string>
+    <string name="last_modified_at">Last Modified At</string>
+    <string name="last_modified_by">Last Modified By</string>
+    <string name="description">Description</string>
+    <string name="remove">Remove</string>
+    <string name="move">Move</string>
+
 </resources>

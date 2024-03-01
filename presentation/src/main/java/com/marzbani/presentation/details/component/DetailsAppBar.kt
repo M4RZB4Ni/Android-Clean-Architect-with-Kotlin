@@ -19,7 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.marzbani.presentation.R
 
 @Composable
 fun DetailsAppBar(
@@ -46,7 +48,7 @@ fun DetailsAppBar(
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(id = R.string.back),
                 tint = Color.White,
                 modifier = Modifier
                     .padding(8.dp)
@@ -60,7 +62,7 @@ fun DetailsAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit",
+                    contentDescription = stringResource(id = R.string.edit),
                     tint = Color.White,
                     modifier = Modifier
                         .clip(CircleShape)
@@ -69,7 +71,7 @@ fun DetailsAppBar(
 
                 Icon(
                     imageVector = Icons.Default.Share,
-                    contentDescription = "Share",
+                    contentDescription = stringResource(id = R.string.share),
                     tint = Color.White,
                     modifier = Modifier
                         .clip(CircleShape)

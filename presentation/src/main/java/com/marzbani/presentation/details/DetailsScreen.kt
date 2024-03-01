@@ -18,9 +18,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.marzbani.presentation.R
 import com.marzbani.presentation.details.component.DetailsAppBar
 import com.marzbani.presentation.details.component.DetailsCardItem
 
@@ -57,17 +59,17 @@ fun DetailsScreen(modifier: Modifier = Modifier, viewModel: DetailsViewModel,nod
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Details",
+                    text = stringResource(id = R.string.details),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                DetailsCardItem("ID", details.id)
-                DetailsCardItem("Created At", details.createdAt)
-                DetailsCardItem("Created By", details.createdBy)
-                DetailsCardItem("Last Modified At", details.lastModifiedAt)
-                DetailsCardItem("Last Modified By", details.lastModifiedBy)
+                DetailsCardItem(stringResource(id = R.string.id), details.id)
+                DetailsCardItem(stringResource(id = R.string.created_at), details.createdAt)
+                DetailsCardItem(stringResource(id = R.string.created_by), details.createdBy)
+                DetailsCardItem(stringResource(id = R.string.last_modified_at), details.lastModifiedAt)
+                DetailsCardItem(stringResource(id = R.string.last_modified_by), details.lastModifiedBy)
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -84,7 +86,7 @@ fun DetailsScreen(modifier: Modifier = Modifier, viewModel: DetailsViewModel,nod
                     )
                 ) {
                     Text(
-                        text = "Description",
+                        text = stringResource(id = R.string.description),
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.White,
                         modifier = Modifier

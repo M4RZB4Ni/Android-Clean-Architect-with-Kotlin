@@ -36,7 +36,6 @@ class NodesViewModel @Inject constructor(private val getNodesUseCase: GetNodesUs
         getNodesUseCase.execute(
             params = "data.json",
             onSuccess = {
-                Log.d("loadData",it.toString())
                 _nodesData.value=it
             },
             onError = {
