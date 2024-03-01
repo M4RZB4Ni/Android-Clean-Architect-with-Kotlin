@@ -1,9 +1,5 @@
 package com.marzbani.presentation.headQuarter
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,23 +17,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.marzbani.domain.entity.TreeNodeEntity
 import com.marzbani.presentation.headQuarter.component.TreeNodeItem
-import com.marzbani.presentation.ui.theme.ImglyTaskTheme
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.StateFlow
 
 
-@AndroidEntryPoint
-class HqActivity : ComponentActivity() {
+@OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun NodesScreen(
+        modifier: Modifier,
+        viewModel: HqViewModel,
+    ) {
 
-private val viewModel:HqViewModel by viewModels()
+        val data by viewModel.nodesData.collectAsState()
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ImglyTaskTheme {
+
                 Scaffold(topBar = { TopAppBar(
                     title = { Text(text = "Task Test") },
                     actions = {
@@ -52,39 +44,24 @@ private val viewModel:HqViewModel by viewModels()
                         }
                     }
                 ) }) { paddingValues ->
-                    TreeScreen(Modifier.padding(paddingValues),nodesData = viewModel.nodesData, onItemClick={viewModel.onItemClick(it)},onRemoveClick={it->viewModel.onRemoveClick(it) }, onMoveClick = { movedNode,parentNode-> viewModel.onMoveClick(movedNode,parentNode)}, isEditMode = viewModel.isEditMode)
-            }
-        }
-    }
-}
-
-    @Composable
-    fun TreeScreen(
-        modifier: Modifier,
-        nodesData: StateFlow<List<TreeNodeEntity>>,
-        onItemClick: (TreeNodeEntity) -> Unit,
-        onRemoveClick: (TreeNodeEntity) -> Unit,
-        onMoveClick: (TreeNodeEntity, TreeNodeEntity?) -> Unit,
-        isEditMode: Boolean
-    ) {
-        val data by nodesData.collectAsState()
-
-        LazyColumn(
-            modifier = modifier,
-            content = {
-                items(data) { treeNode ->
-                    TreeNodeItem(
-                        modifier = modifier,
-                        treeNode = treeNode,
-                        onItemClick = onItemClick,
-                        onRemoveClick = onRemoveClick,
-                        onMoveClick = onMoveClick,
-                        isEditMode = isEditMode
+                    LazyColumn(
+                        modifier = modifier.padding(paddingValues),
+                        content = {
+                            items(data) { treeNode ->
+                                TreeNodeItem(
+                                    modifier = modifier,
+                                    treeNode = treeNode,
+                                    onItemClick = {viewModel.onItemClick(it)},
+                                    onRemoveClick = {viewModel.onRemoveClick(it)},
+                                    onMoveClick = { movedNode,parentNode-> viewModel.onMoveClick(movedNode,parentNode)},
+                                    isEditMode = viewModel.isEditMode
+                                )
+                            }
+                        }
                     )
                 }
-            }
-        )
+
     }
 
-}
+
 
