@@ -10,6 +10,7 @@ import dagger.hilt.android.HiltAndroidApp
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
         MultiDex.install(this)
     }
     override fun attachBaseContext(base: Context) {

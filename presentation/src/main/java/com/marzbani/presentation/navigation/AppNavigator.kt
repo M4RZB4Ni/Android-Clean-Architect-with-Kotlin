@@ -16,13 +16,14 @@ import com.marzbani.presentation.nodes.NodesScreen
     fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.Nodes.route,
+    startDestination: String = NavigationItem.NODES.route,
     ) {
         NavHost(
             navController = navController,
             startDestination = startDestination
         ) {
-            composable(NavigationItem.Nodes.route) {
+
+            composable(NavigationItem.NODES.route) {
                 val viewModel = hiltViewModel<NodesViewModel>()
                 NodesScreen(modifier,viewModel)
             }
@@ -30,5 +31,6 @@ import com.marzbani.presentation.nodes.NodesScreen
                 val viewModel = hiltViewModel<DetailsViewModel>()
                 DetailsScreen(name = "")
             }
+
         }
     }

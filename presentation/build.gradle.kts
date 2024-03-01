@@ -48,6 +48,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.50")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
+
+
+
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))

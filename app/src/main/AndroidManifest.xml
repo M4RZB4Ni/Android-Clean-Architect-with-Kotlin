@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         tools:targetApi="31">
         <activity
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:name="com.marzbani.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
