@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.marzbani.domain.entity.TreeNodeEntity
 import com.marzbani.domain.usecase.GetNodesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,8 +52,9 @@ class NodesViewModel @Inject constructor(private val getNodesUseCase: GetNodesUs
         return nodes.filterNot { it == targetNode }
             .map { it.copy(children = removeNodeRecursively(it.children.orEmpty(), targetNode)) }
     }
-    fun onItemClick(selectedNode: TreeNodeEntity) {
+    fun onItemClick(selectedNode: TreeNodeEntity,navController: NavController) {
         Log.e("selectedNode",selectedNode.id.toString())
+        navController.navigate("details/${selectedNode.id}")
     }
     fun onMoveClick(movedNode: TreeNodeEntity, newParentNode: TreeNodeEntity?) {
         println("Before Move:")

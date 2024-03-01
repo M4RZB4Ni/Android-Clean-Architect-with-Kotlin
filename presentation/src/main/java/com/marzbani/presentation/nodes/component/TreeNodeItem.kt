@@ -40,11 +40,10 @@ fun TreeNodeItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
-
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (isEditMode) 4.dp else 0.dp
+        elevation =  CardDefaults.cardElevation(
+            defaultElevation = 8.dp
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
         Box(
             modifier = Modifier
@@ -79,7 +78,9 @@ fun TreeNodeItem(
                             )
                         }
                     }
-                }                // Display edit actions when in edit mode
+                }
+
+                // Display edit actions when in edit mode
                 if (isEditMode) {
                     TreeNodeEditActions(
                         onRemoveClick = { onRemoveClick(treeNode) },
