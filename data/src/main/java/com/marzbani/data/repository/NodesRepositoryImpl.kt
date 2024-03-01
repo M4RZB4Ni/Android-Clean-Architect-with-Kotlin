@@ -10,12 +10,12 @@ import io.reactivex.Single
 
 class NodesRepositoryImpl(private val service: NodesService,private val nodeMap: TreeNodeEntityMapper,private val detailsEntityMapper: DetailsEntityMapper):NodesRepository {
     override fun getNodes(url: String): Single<List<TreeNodeEntity>> {
-        return service.getNodes(url)
-            .map { nodeMap.mapFromTreeNodeList(it) }
+        return  service.getNodes(url).map { nodeMap.toEntityList(it) }
     }
+
     override fun getAdditionalData(dataCode: String): Single<DetailsEntity> {
         return service.getAdditionalData(dataCode)
-            .map { detailsEntityMapper.mapFromData(it) }
+            .map { detailsEntityMapper.toEntity(it) }
     }
 
 

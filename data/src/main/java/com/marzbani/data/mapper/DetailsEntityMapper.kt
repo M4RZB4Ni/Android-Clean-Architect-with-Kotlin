@@ -1,17 +1,21 @@
 package com.marzbani.data.mapper
 
+import com.google.gson.Gson
 import com.marzbani.data.model.DetailsModel
 import com.marzbani.domain.entity.DetailsEntity
 
 class DetailsEntityMapper {
-    fun mapFromData(data: DetailsModel): DetailsEntity {
-        return DetailsEntity(
-            id = data.id,
-            createdAt = data.createdAt,
-            createdBy = data.createdBy,
-            lastModifiedAt = data.lastModifiedAt,
-            lastModifiedBy = data.lastModifiedBy,
-            description = data.description
-        )
+
+
+    private val gson = Gson()
+
+    fun fromEntity(entity: DetailsEntity): DetailsModel {
+        val json = gson.toJson(entity)
+        return gson.fromJson(json, DetailsModel::class.java)
+    }
+
+    fun toEntity(model: DetailsModel): DetailsEntity {
+        val json = gson.toJson(model)
+        return gson.fromJson(json, DetailsEntity::class.java)
     }
 }

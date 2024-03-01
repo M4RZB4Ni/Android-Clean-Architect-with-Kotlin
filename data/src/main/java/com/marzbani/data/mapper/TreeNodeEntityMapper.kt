@@ -1,39 +1,24 @@
 package com.marzbani.data.mapper
 
-import com.marzbani.data.model.Entry
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.marzbani.data.model.TreeNodeModel
-import com.marzbani.data.model.Workspace
-import com.marzbani.domain.entity.EntryEntity
 import com.marzbani.domain.entity.TreeNodeEntity
-import com.marzbani.domain.entity.WorkspaceEntity
 
 
 class TreeNodeEntityMapper {
-    fun mapFromTreeNodeList(treeNodes: List<TreeNodeModel>): List<TreeNodeEntity> {
-        return treeNodes.map { mapFromTreeNode(it) }
+    private val gson = Gson()
+
+
+    fun toEntity(model: TreeNodeModel): TreeNodeEntity {
+        val json = gson.toJson(model)
+        return gson.fromJson(json, TreeNodeEntity::class.java)
     }
 
-    private fun mapFromTreeNode(treeNode: TreeNodeModel): TreeNodeEntity {
-        return TreeNodeEntity(
-            label = treeNode.label,
-            entries = treeNode.entries?.map { mapEntry(it) } ?: emptyList(),
-            children = treeNode.children?.map { mapFromTreeNode(it) } ?: emptyList(),
-            workspace = treeNode.workspace?.let { mapWorkspace(it) }
-        )
+    fun toEntityList(models: List<TreeNodeModel>): List<TreeNodeEntity> {
+        val json = gson.toJson(models)
+        val listType = object : TypeToken<List<TreeNodeEntity>>() {}.type
+        return gson.fromJson(json, listType)
     }
 
-    private fun mapWorkspace(node: Workspace): WorkspaceEntity {
-        return WorkspaceEntity(
-            name = node.label,
-            entries = node.children?.map { mapEntry(it) } ?: emptyList()
-        )
-    }
-
-    private fun mapEntry(node: Entry): EntryEntity {
-        return EntryEntity(
-            id = node.id,
-            label = node.label,
-            subEntries = node.children?.map { mapEntry(it) } ?: emptyList()
-        )
-    }
 }

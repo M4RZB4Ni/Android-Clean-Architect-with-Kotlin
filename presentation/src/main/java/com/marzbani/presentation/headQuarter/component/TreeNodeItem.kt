@@ -3,6 +3,7 @@ package com.marzbani.presentation.headQuarter.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,89 +29,114 @@ import com.marzbani.domain.entity.TreeNodeEntity
 
 @Composable
 fun TreeNodeItem(
+    modifier: Modifier,
     treeNode: TreeNodeEntity,
     onItemClick: (TreeNodeEntity) -> Unit,
     onRemoveClick: (TreeNodeEntity) -> Unit,
-    onMoveClick: (TreeNodeEntity) -> Unit,
+    onMoveClick: (TreeNodeEntity, TreeNodeEntity?) -> Unit,
     isEditMode: Boolean
 ) {
-
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
+
         elevation = CardDefaults.cardElevation(
             defaultElevation = if (isEditMode) 4.dp else 0.dp
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .clickable { onItemClick(treeNode) }
-                .padding(16.dp)
                 .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
         ) {
-            Row(
+            Column(
                 modifier = Modifier
+                    .padding(16.dp)
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.AccountBox,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = treeNode.label,
-                )
-            }
+                // Content of the TreeNode
+                TreeNodeContent(treeNode = treeNode, onItemClick = onItemClick)
 
-            // Recursively display children
-            treeNode.children?.let { children ->
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                ) {
-                    children.forEach { childNode ->
-                        TreeNodeItem(
-                            treeNode = childNode,
-                            onItemClick = onItemClick,
-                            onRemoveClick = onRemoveClick,
-                            onMoveClick = onMoveClick,
-                            isEditMode = isEditMode
-                        )
+                // Recursively display children using LazyColumn
+                treeNode.children?.let { children ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        children.forEach { childNode ->
+                            TreeNodeItem(
+                                modifier = Modifier,
+                                treeNode = childNode,
+                                onItemClick = onItemClick,
+                                onRemoveClick = onRemoveClick,
+                                onMoveClick = { movedNode, newParentNode ->
+                                    onMoveClick(movedNode, newParentNode)
+                                },
+                                isEditMode = isEditMode
+                            )
+                        }
                     }
+                }                // Display edit actions when in edit mode
+                if (isEditMode) {
+                    TreeNodeEditActions(
+                        onRemoveClick = { onRemoveClick(treeNode) },
+                        onMoveClick = { onMoveClick(treeNode, null) } // Pass null for newParentNode initially
+                    )
                 }
             }
+        }
+    }
+}
 
-            // Display edit actions when in edit mode
-            if (isEditMode) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    // Button to remove the item
-                    IconButton(onClick = { onRemoveClick(treeNode) }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Remove",
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
 
-                    // Button to move the item
-                    IconButton(onClick = { onMoveClick(treeNode) }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowForward,
-                            contentDescription = "Move",
-                            tint = MaterialTheme.colorScheme.secondary
-                        )
-                    }
-                }
-            }
+
+@Composable
+private fun TreeNodeContent(treeNode: TreeNodeEntity, onItemClick: (TreeNodeEntity) -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.AccountBox,
+            contentDescription = null,
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = treeNode.label)
+    }
+}
+
+@Composable
+private fun TreeNodeEditActions(
+    onRemoveClick: () -> Unit,
+    onMoveClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        // Button to remove the item
+        IconButton(onClick = onRemoveClick) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Remove",
+                tint = MaterialTheme.colorScheme.error
+            )
+        }
+
+        // Button to move the item
+        IconButton(onClick = onMoveClick) {
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = "Move",
+                tint = MaterialTheme.colorScheme.secondary
+            )
         }
     }
 }

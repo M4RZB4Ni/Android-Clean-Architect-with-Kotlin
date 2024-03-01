@@ -39,7 +39,7 @@ private val viewModel:HqViewModel by viewModels()
         setContent {
             ImglyTaskTheme {
                 Scaffold(topBar = { TopAppBar(
-                    title = { Text(text = "Your App Title") },
+                    title = { Text(text = "Task Test") },
                     actions = {
                         IconButton(
                             onClick = { viewModel.toggleEditMode() },
@@ -52,39 +52,39 @@ private val viewModel:HqViewModel by viewModels()
                         }
                     }
                 ) }) { paddingValues ->
-                    TreeScreen(Modifier.padding(paddingValues),nodesData = viewModel.nodesData, onItemClick = {},onRemoveClick={ viewModel.onRemoveClick(it)}, onMoveClick = {viewModel.onMoveClick(it)}, isEditMode = viewModel.isEditMode)
-
-
-
+                    TreeScreen(Modifier.padding(paddingValues),nodesData = viewModel.nodesData, onItemClick={viewModel.onItemClick(it)},onRemoveClick={it->viewModel.onRemoveClick(it) }, onMoveClick = { movedNode,parentNode-> viewModel.onMoveClick(movedNode,parentNode)}, isEditMode = viewModel.isEditMode)
             }
         }
     }
 }
 
-@Composable
-fun TreeScreen(
-    modifier: Modifier,
-    nodesData: StateFlow<List<TreeNodeEntity>>,
-    onItemClick: (TreeNodeEntity) -> Unit,
-    onRemoveClick: (TreeNodeEntity) -> Unit,
-    onMoveClick: (TreeNodeEntity) -> Unit,
-    isEditMode : Boolean
-) {
-    val data by nodesData.collectAsState()
-        LazyColumn()
-        {
-            items(data)
-            {
-                TreeNodeItem(
-                    treeNode = it,
-                    onItemClick = onItemClick,
-                    onRemoveClick = onRemoveClick,
-                    onMoveClick = onMoveClick,
-                    isEditMode = isEditMode
-                )
-            }
-        }
+    @Composable
+    fun TreeScreen(
+        modifier: Modifier,
+        nodesData: StateFlow<List<TreeNodeEntity>>,
+        onItemClick: (TreeNodeEntity) -> Unit,
+        onRemoveClick: (TreeNodeEntity) -> Unit,
+        onMoveClick: (TreeNodeEntity, TreeNodeEntity?) -> Unit,
+        isEditMode: Boolean
+    ) {
+        val data by nodesData.collectAsState()
 
-}
+        LazyColumn(
+            modifier = modifier,
+            content = {
+                items(data) { treeNode ->
+                    TreeNodeItem(
+                        modifier = modifier,
+                        treeNode = treeNode,
+                        onItemClick = onItemClick,
+                        onRemoveClick = onRemoveClick,
+                        onMoveClick = onMoveClick,
+                        isEditMode = isEditMode
+                    )
+                }
+            }
+        )
+    }
+
 }
 

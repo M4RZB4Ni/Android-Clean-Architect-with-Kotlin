@@ -6,8 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.marzbani.domain.entity.TreeNodeEntity
-import com.marzbani.domain.entity.moveNode
-import com.marzbani.domain.entity.removeNode
 import com.marzbani.domain.usecase.GetNodesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +20,7 @@ class HqViewModel @Inject constructor(private val getNodesUseCase: GetNodesUseCa
 
     private var _isEditMode by mutableStateOf(false)
     val isEditMode: Boolean get() = _isEditMode
+
 
     fun toggleEditMode() {
         _isEditMode = !_isEditMode
@@ -46,13 +45,44 @@ class HqViewModel @Inject constructor(private val getNodesUseCase: GetNodesUseCa
         )
     }
     fun onRemoveClick(selectedNode: TreeNodeEntity) {
-        val updatedNodes = removeNode(_nodesData.value, selectedNode)
+        _nodesData.value = removeNodeRecursively(_nodesData.value, selectedNode)
+    }
+    private fun removeNodeRecursively(nodes: List<TreeNodeEntity>, targetNode: TreeNodeEntity): List<TreeNodeEntity> {
+        return nodes.filterNot { it == targetNode }
+            .map { it.copy(children = removeNodeRecursively(it.children.orEmpty(), targetNode)) }
+    }
+    fun onItemClick(selectedNode: TreeNodeEntity) {
+        Log.e("selectedNode",selectedNode.id.toString())
+    }
+    fun onMoveClick(movedNode: TreeNodeEntity, newParentNode: TreeNodeEntity?) {
+        println("Before Move:")
+        println("Moved Node: $movedNode")
+        println("New Parent Node: $newParentNode")
+        println("Original Nodes:")
+        println(_nodesData.value)
+
+        val updatedNodes = moveNode(_nodesData.value, movedNode, newParentNode)
+
+        println("After Move:")
+        println("Updated Nodes:")
+        println(updatedNodes)
+
         _nodesData.value = updatedNodes
     }
 
-    fun onMoveClick(movedNode: TreeNodeEntity) {
-        val updatedNodes = moveNode(_nodesData.value, movedNode)
-        _nodesData.value = updatedNodes
+    private fun moveNode(nodes: List<TreeNodeEntity>, movedNode: TreeNodeEntity, newParentNode: TreeNodeEntity?): List<TreeNodeEntity> {
+        return nodes.map { node ->
+            when (node) {
+                movedNode -> {
+                    node.copy(children = moveNode(node.children.orEmpty(), movedNode, null))
+                }
+                newParentNode -> {
+                    node.copy(children = node.children.orEmpty() + movedNode)
+                }
+                else -> {
+                    node.copy(children = moveNode(node.children.orEmpty(), movedNode, newParentNode))
+                }
+            }
+        }.filterNot { it == movedNode }
     }
-
 }
