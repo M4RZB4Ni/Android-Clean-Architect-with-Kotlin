@@ -1,4 +1,4 @@
-package com.marzbani.presentation.headQuarter
+package com.marzbani.presentation.nodes
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,14 +17,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.marzbani.presentation.headQuarter.component.TreeNodeItem
+import com.marzbani.presentation.nodes.component.TreeNodeItem
 
 
 @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun NodesScreen(
-        modifier: Modifier,
-        viewModel: HqViewModel,
+    modifier: Modifier,
+    viewModel: NodesViewModel,
     ) {
 
         val data by viewModel.nodesData.collectAsState()

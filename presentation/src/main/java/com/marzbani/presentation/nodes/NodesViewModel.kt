@@ -1,4 +1,4 @@
-package com.marzbani.presentation.headQuarter
+package com.marzbani.presentation.nodes
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class HqViewModel @Inject constructor(private val getNodesUseCase: GetNodesUseCase): ViewModel() {
+class NodesViewModel @Inject constructor(private val getNodesUseCase: GetNodesUseCase): ViewModel() {
 
     private val _nodesData = MutableStateFlow<List<TreeNodeEntity>>(emptyList())
     val nodesData : StateFlow<List<TreeNodeEntity>> get() = _nodesData

@@ -1,4 +1,4 @@
-package com.marzbani.presentation.headQuarter.component
+package com.marzbani.presentation.nodes.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

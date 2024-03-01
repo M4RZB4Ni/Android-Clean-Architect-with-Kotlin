@@ -6,10 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.marzbani.presentation.details.DetailsActivity
+import com.marzbani.presentation.details.DetailsScreen
 import com.marzbani.presentation.details.DetailsViewModel
-import com.marzbani.presentation.headQuarter.HqViewModel
-import com.marzbani.presentation.headQuarter.NodesScreen
+import com.marzbani.presentation.nodes.NodesViewModel
+import com.marzbani.presentation.nodes.NodesScreen
 
 
 @Composable
@@ -23,13 +23,12 @@ import com.marzbani.presentation.headQuarter.NodesScreen
             startDestination = startDestination
         ) {
             composable(NavigationItem.Nodes.route) {
-                val viewModel = hiltViewModel<HqViewModel>()
+                val viewModel = hiltViewModel<NodesViewModel>()
                 NodesScreen(modifier,viewModel)
             }
             composable(NavigationItem.DETAILS.route) {
                 val viewModel = hiltViewModel<DetailsViewModel>()
-
-                DetailsActivity()
+                DetailsScreen(name = "")
             }
         }
     }
